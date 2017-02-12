@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Mail contact</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <h:outputStylesheet library="css" name="default.css"/>
+    <h:outputStylesheet library="css" name="layout.css"/>
+    <link href="resources/images/favicon.ico" rel="shortcut icon"
+          type="image/x-icon"/>
+</h:head>
+
+<h:body>
+
+    <div id="content">
+        <h:form>
+            <h:messages />
+
+            <h:panelGrid columns="2" styleClass="contact_form" style="width: 100%;">
+                <h:outputLabel value="#{messages['form.name']} : " />
+                <h:inputText value="#{mailContactBean.name}" required="true" style="width: 500px;"
+                             requiredMessage="#{messages['form.name.required']}">
+                    <f:validateLength maximum="100" />
+                    <f:validateRegex pattern="[\w\s]+" />
+                </h:inputText>
+
+                <h:outputLabel value="#{messages['form.email']} : " />
+                <h:inputText value="#{mailContactBean.email}" required="true" style="width: 500px;"
+                             requiredMessage="#{messages['form.email.required']}">
+                    <f:validateLength maximum="100" />
+                    <f:validateRegex pattern="[a-zA-Z0-9.]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*" />
+                </h:inputText>
+
+                <h:outputLabel value="#{messages['form.subject']} : " />
+                <h:inputText value="#{mailContactBean.subject}" required="true" style="width: 500px;"
+                             requiredMessage="#{messages['form.subject.required']}">
+                    <f:validateLength maximum="100" />
+                    <f:validateRegex pattern="[\w\d\s]+" />
+                </h:inputText>
+
+                <h:outputLabel value="#{messages['form.content']} : " />
+                <h:inputTextarea value="#{mailContactBean.content}" rows="8" required="true" style="width: 500px;"
+                                 requiredMessage="#{messages['form.content.required']}" />
+
+                <h:outputText value=" " style="width: 20%;"/>
+                <h:commandLink action="#{mailContactBean.send}">
+                    <h:outputText value="#{messages['form.send']} " />
+                </h:commandLink>
+            </h:panelGrid>
+        </h:form>
+    </div>
+</h:body>
+
+</html>
