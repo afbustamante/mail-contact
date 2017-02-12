@@ -5,17 +5,16 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
-import javax.inject.Named;
+import java.io.Serializable;
 
 /**
  * @author andresbustamante
  */
-@Named
 @ManagedBean
-@ViewScoped
-public class MailContactBean {
+@RequestScoped
+public class MailContactBean implements Serializable {
 
     @Inject
     private MailService mailService;
@@ -45,6 +44,7 @@ public class MailContactBean {
     public MailContactBean() {}
 
     public void send() {
+        log.info("A new message is going to be sent");
         mailService.sendMail(subject, content, name, email);
     }
 
