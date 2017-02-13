@@ -26,7 +26,7 @@ public class MailServiceImpl implements MailService {
     private final transient Log log = LogFactory.getLog(MailServiceImpl.class);
 
     @Override
-    public void sendMail(String subject, String content, String name, String email) {
+    public void sendMail(String subject, String content, String name, String email) throws MessagingException {
         log.info("Sending message with subject " + subject);
 
         try {
@@ -43,8 +43,6 @@ public class MailServiceImpl implements MailService {
 
             Transport.send(message);
             log.info("Message sent");
-        } catch (MessagingException e) {
-            log.error("Error while sending message", e);
         } catch (UnsupportedEncodingException e) {
             log.error("Error of encoding while creating message to send", e);
         }

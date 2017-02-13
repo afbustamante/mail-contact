@@ -52,3 +52,21 @@ img {
 p {
     text-align: justify;
 }
+
+.messages {
+    border: thin solid orange;
+    background-color: #FFDE00;
+    padding: 20px;
+}
+
+.error {
+    color: #000066;
+}
+
+.warning {
+    color: #CC9900;
+}
+
+.info {
+    color: #006666;
+}

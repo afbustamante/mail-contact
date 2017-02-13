@@ -4,10 +4,14 @@ import net.andresbustamante.mail.contact.services.MailService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.mail.MessagingException;
 import java.io.Serializable;
+import java.util.ResourceBundle;
 
 /**
  * @author andresbustamante
@@ -39,13 +43,34 @@ public class MailContactBean implements Serializable {
      */
     private String content;
 
+    private transient FacesContext ctx;
+
+    private transient ResourceBundle messages;
+
     private final transient Log log = LogFactory.getLog(MailContactBean.class);
 
-    public MailContactBean() {}
+    public MailContactBean() {
+        ctx = FacesContext.getCurrentInstance();
+        messages = ctx.getApplication().getResourceBundle(ctx, "messages");
+    }
 
-    public void send() {
+    public String send() {
         log.info("A new message is going to be sent");
-        mailService.sendMail(subject, content, name, email);
+        FacesMessage response;
+
+        try {
+            mailService.sendMail(subject, content, name, email);
+
+            response = new FacesMessage(FacesMessage.SEVERITY_INFO, messages.getString("email.sent"),
+                    messages.getString("email.sent.detail"));
+            ctx.addMessage(null, response);
+        } catch (MessagingException e) {
+            log.error("Error while sending message", e);
+            response = new FacesMessage(FacesMessage.SEVERITY_ERROR, messages.getString("email.not.sent"),
+                    e.getMessage());
+            ctx.addMessage(null, response);
+        }
+        return "result";
     }
 
     public String getName() {
