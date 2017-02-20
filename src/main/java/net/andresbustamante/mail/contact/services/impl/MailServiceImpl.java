@@ -32,11 +32,12 @@ public class MailServiceImpl implements MailService {
         try {
             Message message = new MimeMessage(mailSession);
             Address[] contactAddress = {new InternetAddress(email, name)};
-            Address[] toAddress = {new InternetAddress(ConfigProperties.getValue("mail.recipient.address"))};
+            Address fromAddress = new InternetAddress(ConfigProperties.getValue("mail.sender.address"));
+            Address toAddress = new InternetAddress(ConfigProperties.getValue("mail.recipient.address"));
 
-            message.setFrom(contactAddress[0]);
+            message.setFrom(fromAddress);
             message.setReplyTo(contactAddress);
-            message.setRecipients(Message.RecipientType.TO, toAddress);
+            message.setRecipient(Message.RecipientType.TO, toAddress);
             message.setSubject(subject);
             message.setSentDate(new Date());
             message.setText(content);
