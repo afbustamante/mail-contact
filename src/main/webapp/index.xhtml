@@ -12,6 +12,7 @@
     <h:outputStylesheet library="css" name="layout.css"/>
     <link href="resources/images/favicon.ico" rel="shortcut icon"
           type="image/x-icon"/>
+    <script type="application/javascript" src='https://www.google.com/recaptcha/api.js'></script>
 </h:head>
 
 <h:body>
@@ -49,6 +50,8 @@
                 <h:outputText value=" " style="width: 20%;"/>
                 <h:commandButton action="#{mailContactBean.send}" value="#{messages['form.send']}" />
             </h:panelGrid>
+
+            <div class="g-recaptcha" data-sitekey="#{config['recaptcha.website.key']}"></div>
         </h:form>
     </div>
 </h:body>
