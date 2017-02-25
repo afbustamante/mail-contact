@@ -21,6 +21,9 @@ import java.util.Date;
 @Named("mailService")
 public class MailServiceImpl implements MailService {
 
+    private static final String SEPARATOR = "\n--\n";
+    private static final String NEW_LINE = "\n";
+
     private Session mailSession;
 
     private final transient Log log = LogFactory.getLog(MailServiceImpl.class);
@@ -40,7 +43,7 @@ public class MailServiceImpl implements MailService {
             message.setRecipient(Message.RecipientType.TO, toAddress);
             message.setSubject(subject);
             message.setSentDate(new Date());
-            message.setText(content);
+            message.setText(content + createSignature(name, email));
 
             Transport.send(message);
             log.info("Message sent");
@@ -57,5 +60,9 @@ public class MailServiceImpl implements MailService {
         } catch (NamingException e) {
             log.error("Error while finding JNDI JavaMail session", e);
         }
+    }
+
+    private String createSignature(String name, String email) {
+        return SEPARATOR + name + NEW_LINE + email;
     }
 }
