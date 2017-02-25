@@ -1,6 +1,9 @@
-body {
-    margin: 0px auto;
-    width: 800px;
+@media (min-width: 1024px) {
+    body {
+        width : 800px;
+        margin-right: auto;
+        margin-left: auto;
+    }
 }
 
 #header {

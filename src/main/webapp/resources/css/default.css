@@ -57,6 +57,7 @@ p {
     border: thin solid orange;
     background-color: #FFDE00;
     padding: 20px;
+    width: 90%;
 }
 
 .error {
