@@ -28,7 +28,6 @@
                 <h:inputText value="#{mailContactBean.name}" required="true" style="width: 90%;"
                              requiredMessage="#{messages['form.name.required']}">
                     <f:validateLength maximum="100" />
-                    <f:validateRegex pattern="[\w\s]+" />
                 </h:inputText>
 
                 <h:outputLabel value="#{messages['form.email']} : " />
@@ -42,7 +41,6 @@
                 <h:inputText value="#{mailContactBean.subject}" required="true" style="width: 90%;"
                              requiredMessage="#{messages['form.subject.required']}">
                     <f:validateLength maximum="100" />
-                    <f:validateRegex pattern="[\w\d\s]+" />
                 </h:inputText>
 
                 <h:outputLabel value="#{messages['form.content']} : " />

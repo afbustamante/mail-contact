@@ -33,7 +33,7 @@ public class MailServiceImpl implements MailService {
         log.info("Sending message with subject " + subject);
 
         try {
-            Message message = new MimeMessage(mailSession);
+            MimeMessage message = new MimeMessage(mailSession);
             Address[] contactAddress = {new InternetAddress(email, name)};
             Address fromAddress = new InternetAddress(ConfigProperties.getValue("mail.sender.address"));
             Address toAddress = new InternetAddress(ConfigProperties.getValue("mail.recipient.address"));
@@ -41,9 +41,9 @@ public class MailServiceImpl implements MailService {
             message.setFrom(fromAddress);
             message.setReplyTo(contactAddress);
             message.setRecipient(Message.RecipientType.TO, toAddress);
-            message.setSubject(subject);
+            message.setSubject(subject, "UTF-8");
             message.setSentDate(new Date());
-            message.setText(content + createSignature(name, email));
+            message.setContent(content + createSignature(name, email), "text/plain; charset=UTF-8");
 
             Transport.send(message);
             log.info("Message sent");
